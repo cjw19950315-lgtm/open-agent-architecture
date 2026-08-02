@@ -1,13 +1,13 @@
 # Open Agent Architecture (OAA)
 
-> Production-grade architecture for building, orchestrating, and governing autonomous AI Agent systems.
+> A runnable 12-Factor Agent Runtime for building, orchestrating, and governing autonomous AI Agent systems.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Architecture: 12-Factor](https://img.shields.io/badge/Architecture-12-Factor-green.svg)](spec/12-factor-agent-spec.md)
 [![CI: verify](https://img.shields.io/badge/CI-verify-brightgreen.svg)](.github/workflows/verify.yml)
 
-**Open Agent Architecture (OAA)** is an open-source reference framework for governing autonomous AI agents. It implements the **12-Factor Agent Architecture**, dynamic skill routing, auditable multi-agent DAG execution, and a **session Harness** with an **Obsidian Markdown Vault** as the human ground-truth layer.
+**Open Agent Architecture (OAA)** is an open-source, runnable Agent Runtime: it provides a control plane, intent compiler, dynamic skill router, parallel DAG executor, agent loop with pluggable model providers, durable session Harness, Obsidian-style ground-truth vault, verification gates, and chained SHA-256 execution receipts. It runs offline out of the box with a deterministic provider, and can be pointed at OpenAI-compatible models.
 
 ---
 
@@ -21,15 +21,79 @@
 
 ---
 
+## ⚙️ Runtime Quick Start
+
+No API key required. The deterministic provider runs the full chain offline.
+
+```bash
+# run a real task through Control Plane -> Skill Router -> DAG -> Agent Loop -> Verification -> Receipt
+python examples/real_task.py .
+```
+
+Or use the CLI:
+
+```bash
+# create a task, plan it, execute it, verify it, and persist a receipt
+python -m oaa run "Read README.md and pyproject.toml, analyze the project architecture, and write analysis.md" --workspace .
+
+# inspect task state
+python -m oaa state <task_id> --workspace .
+
+# resume a task that was interrupted (session persisted on disk)
+python -m oaa resume <task_id> --workspace .
+
+# view the chained execution receipt
+python -m oaa receipt <task_id> --workspace .
+```
+
+Programmatic API:
+
+```python
+from oaa.runtime import Runtime
+
+runtime = Runtime(workspace=".")
+result = runtime.run("Read README.md and pyproject.toml, analyze the project architecture, and write analysis.md")
+print(result["state"])          # PASSED
+print(runtime.get_receipt(result["task_id"]))
+```
+
+---
+
+## 🔄 Real Execution Path
+
+```
+User Request
+  -> Control Plane (create/plan/run lifecycle)
+  -> Intent Compiler (5 routing dimensions)
+  -> Skill Router (registry + match + rank + select)
+  -> DAG Planner (read fan-out -> reason -> write -> verify fan-in)
+  -> DAG Executor (parallel waves, single-writer lock, retries, timeouts)
+  -> Agent Loop (provider prompt -> tool call -> result -> provider)
+  -> Verification Gate (schema / policy / secret scan / tests / approval)
+  -> Session Harness + Memory (checkpoints, vault, evidence)
+  -> Chained SHA-256 Receipt
+  -> Final Result (state = PASSED/FAILED/CANCELLED)
+```
+
+This is the real code path implemented in the `oaa` package, not a diagram-only claim.
+
+---
+
 ## 🚀 Key Features
 
-1. **12-Factor Agent Principles** — clear separation of Control Plane, Context Budgeting, Verification Gates, and deterministic state reducers.
-2. **Dynamic Skill Routing Engine** — intent compression, metadata recall, precondition memory, and bounded tool selection (max 1 primary + 2 secondary skills).
-3. **Auditable Multi-Agent DAG** — isolated sub-agent execution with bounded timeouts, single-writer concurrency, and SHA-256 execution receipts.
-4. **Zero-Trust Security Boundary** — workspace sandboxing, credential masking, and explicit write approvals.
-5. **Obsidian Ground-Truth Vault** — human-confirmed decisions, reviews, and long-term experience live in a Markdown vault.
-6. **Session Harness** — cross-session task state, checkpoints, and cryptographic receipts survive compaction and restarts.
-7. **Multi-Model & Provider Agnostic** — OpenAI GPT / Codex, Claude, DeepSeek, and local LLM runtimes.
+1. **Control Plane** — task lifecycle, risk assessment, approval hooks, cancellation, retry, resume, final verification.
+2. **Intent Compiler** — compresses a prompt into `final_artifact / input_source / primary_action / business_domain / risk_level`.
+3. **Dynamic Skill Router** — `SkillRegistry` with `register_skill / discover_skills / match_skill / rank_skills / select_skills` (max 1 primary + 2 auxiliary).
+4. **Parallel DAG Executor** — topological scheduling, fan-out/fan-in, per-node timeout, retries, failure propagation, single-writer concurrency.
+5. **Agent Loop** — pluggable `LLMProvider` (offline deterministic provider + optional OpenAI-compatible provider), prompt → model → tool call → result → model.
+6. **Tool Runtime** — filesystem tools with workspace path isolation, credential masking, command policy, and approval gate.
+7. **Session Harness** — durable checkpoints, resume after process restart, JSON persistence.
+8. **Three-Layer Memory** — Ingestion (unconfirmed), Obsidian Ground-Truth Vault (human-only writes, versioned), Session/Evidence stores.
+9. **Verification Gate** — schema validation, policy checks, secret scan, tests, and approval; failures block PASSED.
+10. **Chained Receipts** — SHA-256 over task input, intent, plan, tool calls, state transitions, artifacts, verification, environment, and parent receipt.
+11. **Zero-Trust Security** — path isolation, secret masking, command allowlist, write approvals.
+12. **Observability** — structured logs, spans, execution timeline, metrics.
+13. **Runtime API** — `run / resume / cancel / approve / retry / get_state / get_receipt` + CLI.
 
 ---
 
@@ -43,89 +107,38 @@ OAA separates memory into three decoupled layers:
 | **Ground Truth** | human-confirmed decisions, reviews, experience | Obsidian Markdown Vault |
 | **Session** | task state, checkpoints, receipts across sessions | Harness (JSON + git-backed) |
 
-This separation prevents AI-generated content from silently overwriting human decisions, and lets long-running agent work resume after context compaction.
+Agents cannot write to the ground-truth vault (`GroundTruthStore` rejects non-human authors); the Harness persists checkpoints and receipts so tasks survive restarts.
 
 See [docs/obsidian-harness-integration.md](docs/obsidian-harness-integration.md) for the full pattern.
 
 ---
 
-## 🏗 System Architecture Diagram
-
-```
-+-------------------------------------------------------------------+
-|                        User / API Request                         |
-+-------------------------------------------------------------------+
-                                  |
-                                  v
-+-------------------------------------------------------------------+
-|               Factor 1: Single Control Plane (Codex)               |
-|   - Intent Compression      - Risk Assessment & Approvals         |
-|   - Task Contract           - Final Verification & Receipt        |
-+-------------------------------------------------------------------+
-                                  |
-            +---------------------+---------------------+
-            |                                           |
-            v                                           v
-+-----------------------+                   +-----------------------+
-|  Factor 4: Skill      |                   |  Factor 7: DAG        |
-|  Routing Engine       |                   |  Orchestrator (OMO)   |
-| - Precondition Memory |                   | - Sub-agent DAG       |
-| - Tool Selection Gate |                   | - Parallel Explorer   |
-+-----------------------+                   +-----------------------+
-            |                                           |
-            +---------------------+---------------------+
-                                  |
-                                  v
-+-------------------------------------------------------------------+
-|       Factor 3: Executor / QA / Gate Layer (LazyCodex)            |
-|   - Sandboxed Execution       - Cryptographic Receipt Generator   |
-|   - Automated Linting         - Precondition Guard Verification   |
-+-------------------------------------------------------------------+
-                                  |
-                                  v
-+-------------------------------------------------------------------+
-|            Factor 6: Multi-Layer Memory & Fact Store              |
-|   - Ingestion: LLM Wiki        - Ground Truth: Obsidian Vault     |
-|   - Session: Harness           - Evidence: SHA-256 Receipts       |
-+-------------------------------------------------------------------+
-```
-
----
-
 ## 📋 The 12 Factors of Autonomous AI Agents
 
-| # | Factor | Description |
+| # | Factor | Implementation |
 |---|---|---|
-| 1 | **Single Control Plane** | One orchestrator retains final authority, risk evaluation, and user delivery. |
-| 2 | **Context Budgeting** | Strict token management, progressive disclosure, and compaction-resilient history. |
-| 3 | **Structured Outputs & Gates** | All tool responses and state transitions use verifiable schemas and QA gates. |
-| 4 | **Controlled Tool Selection** | Dynamic skill discovery with max 1 primary + 2 secondary skills per turn. |
-| 5 | **Fast-Path Execution** | Non-blocking execution paths for local operations, fallbacks, and offline diagnostics. |
-| 6 | **Memory Separation** | Ingestion (LLM Wiki), human ground truth (Obsidian Vault), and session Harness are strictly decoupled. |
-| 7 | **Auditable Multi-Agent DAG** | Sub-agents run isolated DAGs with bounded timeouts and single-writer concurrency. |
-| 8 | **Cryptographic Receipts** | Every output emits reproducible execution receipts signed by SHA-256 state hashes. |
-| 9 | **Self-Evolution & Feedback Loop** | Automated capture of execution failures into precondition memory guards. |
-| 10 | **Zero-Trust Security Boundary** | File system sandboxing, credential masking, and mandatory write approvals. |
-| 11 | **Ecosystem Multi-Language Support** | Documentation, schemas, and runtime errors support EN/ZH/JA/ES/DE. |
-| 12 | **Independent Delivery & Gates** | Architecture verification is decoupled from external deployment blocks. |
+| 1 | Single Control Plane | `oaa/control.py` |
+| 2 | Context Budgeting | `oaa/intent.py` + agent message seeding |
+| 3 | Structured Outputs & Gates | `oaa/verification.py` + JSON schemas |
+| 4 | Controlled Tool Selection | `oaa/skills.py` |
+| 5 | Fast-Path Execution | `oaa/runtime.py` direct run path |
+| 6 | Memory Separation | `oaa/memory.py` (Obsidian vault + Harness) |
+| 7 | Auditable Multi-Agent DAG | `oaa/dag.py` |
+| 8 | Cryptographic Receipts | `oaa/receipt.py` |
+| 9 | Self-Evolution & Precondition Memory | skill preconditions + harness checkpoints |
+| 10 | Zero-Trust Security Boundary | `oaa/security.py` |
+| 11 | Ecosystem Multi-Language Support | docs in EN/ZH/JA/ES/DE |
+| 12 | Independent Delivery & Gates | `scripts/verify_architecture.py` + CI |
 
 ---
 
-## 💻 Quick Start
+## 💻 Tests
 
 ```bash
-git clone https://github.com/cjw19950315-lgtm/open-agent-architecture.git
-cd open-agent-architecture
-pip install -e .
+python -m unittest discover -s tests -v
 ```
 
-```bash
-# Run the architecture verification gate
-python scripts/verify_architecture.py
-
-# Run the sample 12-Factor agent workflow
-python examples/demo_agent_workflow.py
-```
+Tests cover: real end-to-end task chain, resume after process restart, DAG parallel fan-out/fan-in, path isolation, ground-truth write protection, and receipt chaining.
 
 ---
 
@@ -139,7 +152,22 @@ open-agent-architecture/
 ├── CHANGELOG.md                        # Release history
 ├── LICENSE                             # MIT License
 ├── pyproject.toml                      # Package configuration
-├── .github/workflows/verify.yml        # CI: architecture + demo gates
+├── .github/workflows/verify.yml        # CI: gate + tests + real task
+├── oaa/                                # Runnable Agent Runtime
+│   ├── runtime.py                      # Public Runtime API
+│   ├── control.py                      # Control Plane
+│   ├── intent.py                       # Intent Compiler
+│   ├── skills.py                       # Skill Registry + Router
+│   ├── tools.py                        # Tool Runtime
+│   ├── dag.py                          # DAG Planner + Executor
+│   ├── agents.py                       # LLM Provider + Agent Loop
+│   ├── harness.py                      # Session Harness
+│   ├── memory.py                       # Ingestion / Obsidian / Evidence
+│   ├── verification.py                 # Verification Gate
+│   ├── receipt.py                      # Chained SHA-256 Receipts
+│   ├── security.py                     # Path isolation / masking / approvals
+│   ├── observability.py                # Spans / logs / metrics
+│   └── cli.py                          # CLI entry
 ├── docs/
 │   ├── i18n/                           # ZH / JA / ES / DE READMEs
 │   └── obsidian-harness-integration.md # Memory separation pattern
@@ -152,8 +180,10 @@ open-agent-architecture/
 │   └── skill-registry.schema.json
 ├── scripts/
 │   └── verify_architecture.py          # Automated verification gate
-└── examples/
-    └── demo_agent_workflow.py          # Runnable 12-Factor demo
+├── examples/
+│   └── real_task.py                    # Real end-to-end task
+└── tests/
+    └── test_runtime.py                 # Runtime unit tests
 ```
 
 ---

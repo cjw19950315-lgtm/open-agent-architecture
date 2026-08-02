@@ -34,6 +34,15 @@ def verify():
         "spec/architecture-contract.json",
         "schemas/architecture-contract.schema.json",
         "schemas/skill-registry.schema.json",
+        "oaa/__init__.py",
+        "oaa/runtime.py",
+        "oaa/control.py",
+        "oaa/dag.py",
+        "oaa/skills.py",
+        "oaa/harness.py",
+        "oaa/cli.py",
+        "tests/test_runtime.py",
+        "examples/real_task.py",
     ]
 
     for f in required_files:
@@ -112,6 +121,14 @@ def verify():
                 errors.append("Contract missing session harness layer")
         except Exception as exc:
             errors.append(f"Invalid JSON in contract: {exc}")
+
+    # 6. Runtime Import Check
+    sys.path.insert(0, base_dir)
+    try:
+        import oaa
+        print("[PASS] oaa package imports successfully")
+    except Exception as exc:
+        errors.append(f"oaa package import failed: {exc}")
 
     print("--------------------------------------------------")
     if errors:

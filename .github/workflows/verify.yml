@@ -15,5 +15,7 @@ jobs:
           python-version: "3.11"
       - name: Run architecture verification gate
         run: python scripts/verify_architecture.py
-      - name: Run demo agent workflow
-        run: python examples/demo_agent_workflow.py
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Run real end-to-end task
+        run: python examples/real_task.py .

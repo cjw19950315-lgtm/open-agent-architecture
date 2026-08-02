@@ -35,6 +35,12 @@ venv.bak/
 .DS_Store
 Thumbs.db
 
+# Runtime artifacts (generated, not committed)
+.oaa/
+vault/
+analysis.md
+*.log
+
 # Sensitive local data
 *.env
 *.pem

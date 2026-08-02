@@ -46,6 +46,40 @@ OAA 将记忆严格分为三层：
 
 ---
 
+
+
+---
+
+## ⚙️ Runtime 快速开始
+
+无需 API Key，内置离线 Provider 即可跑通完整链路：
+
+```bash
+# 真实任务：读取源码 -> 分析 -> 写入报告 -> 验证 -> 收据
+python examples/real_task.py .
+
+# 或使用 CLI
+python -m oaa run "Read README.md and pyproject.toml, analyze the project architecture, and write analysis.md" --workspace .
+
+# 查看任务状态 / 恢复中断任务 / 查看收据
+python -m oaa state <task_id> --workspace .
+python -m oaa resume <task_id> --workspace .
+python -m oaa receipt <task_id> --workspace .
+```
+
+```python
+from oaa.runtime import Runtime
+
+runtime = Runtime(workspace=".")
+result = runtime.run("Read README.md and pyproject.toml, analyze the project architecture, and write analysis.md")
+print(result["state"])  # PASSED
+```
+
+运行测试：
+
+```bash
+python -m unittest discover -s tests -v
+```
 ## 📋 12-Factor 自主 AI Agent 原则
 
 | # | 要素（Factor） | 详细说明 |

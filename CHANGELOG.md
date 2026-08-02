@@ -2,6 +2,17 @@
 
 All notable changes to this project are documented here. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.2.0] - 2026-08-02
+
+### Added
+
+- Runnable `oaa` Agent Runtime package: control plane, intent compiler, dynamic skill router, parallel DAG executor, agent loop with pluggable model providers, tool runtime, session harness, three-layer memory, verification gate, chained SHA-256 receipts, observability, and CLI.
+- Runtime API: `run / resume / cancel / approve / retry / get_state / get_receipt`.
+- End-to-end unit tests (`tests/test_runtime.py`) covering real task chain, resume after restart, DAG parallelism, path isolation, ground-truth protection, and receipt chaining.
+- Real task example (`examples/real_task.py`).
+- CI now runs unit tests and the real end-to-end task.
+- Offline deterministic provider so the runtime runs without API keys; optional OpenAI-compatible provider.
+
 ## [1.1.0] - 2026-08-02
 
 ### Added

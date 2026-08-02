@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "open-agent-architecture"
-version = "1.0.0"
-description = "12-Factor AI Agent Architecture Framework & Dynamic Skill Routing"
+version = "1.2.0"
+description = "Runnable 12-Factor AI Agent Architecture runtime with skill routing, DAG execution, session harness, and verification gates"
 readme = "README.md"
 authors = [{ name = "Open Agent Architecture Maintainers" }]
 license = { text = "MIT" }
@@ -17,11 +17,17 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 requires-python = ">=3.9"
-dependencies = [
-    "pydantic>=2.0.0",
-    "pyyaml>=6.0",
-]
+dependencies = []
+
+[project.optional-dependencies]
+openai = ["openai>=1.0"]
 
 [project.urls]
-"Homepage" = "https://github.com/open-agent-architecture/open-agent-architecture"
-"Documentation" = "https://github.com/open-agent-architecture/open-agent-architecture/tree/main/docs"
+"Homepage" = "https://github.com/cjw19950315-lgtm/open-agent-architecture"
+"Documentation" = "https://github.com/cjw19950315-lgtm/open-agent-architecture/tree/main/docs"
+
+[project.scripts]
+oaa = "oaa.cli:main"
+
+[tool.setuptools]
+packages = ["oaa"]
