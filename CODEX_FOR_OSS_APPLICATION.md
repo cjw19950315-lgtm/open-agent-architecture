@@ -16,8 +16,8 @@ Apply directly at: **[https://openai.com/form/codex-for-oss/](https://openai.com
 - **First Name**: `<Your First Name>`
 - **Last Name**: `<Your Last Name>`
 - **Email**: `<Email associated with your ChatGPT Pro account>`
-- **GitHub Username**: `<Your GitHub Username>` (Ensure profile is set to Public)
-- **GitHub Repository URL**: `https://github.com/<your-username>/open-agent-architecture`
+- **GitHub Username**: `cjw19950315-lgtm` (Ensure profile is set to Public)
+- **GitHub Repository URL**: `https://github.com/cjw19950315-lgtm/open-agent-architecture`
 - **Role**: Select **`Primary maintainer`**
 
 ---
@@ -83,7 +83,7 @@ git commit -m "feat: initialize Open Agent Architecture with 12-Factor spec, mul
 gh repo create open-agent-architecture --public --source=. --remote=origin --push
 
 # Option B: Manual push (Create repo on github.com first)
-git remote add origin https://github.com/<your-username>/open-agent-architecture.git
+git remote add origin https://github.com/cjw19950315-lgtm/open-agent-architecture.git
 git branch -M main
 git push -u origin main
 ```
