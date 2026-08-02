@@ -25,6 +25,11 @@ def verify():
         "LICENSE",
         "pyproject.toml",
         "CODEX_FOR_OSS_APPLICATION.md",
+        "CONTRIBUTING.md",
+        "SECURITY.md",
+        "CHANGELOG.md",
+        ".github/workflows/verify.yml",
+        "docs/obsidian-harness-integration.md",
         "spec/12-factor-agent-spec.md",
         "spec/skill-routing-spec.md",
         "spec/architecture-contract.json",
@@ -54,7 +59,7 @@ def verify():
             print(f"[PASS] i18n Doc exists: {f}")
 
     # 3. UTF-8 Encoding Integrity Check (prevents mojibake regression)
-    unicode_files = ["README.md"] + i18n_files
+    unicode_files = ["README.md", "README.zh-CN.md"] + i18n_files
     for f in unicode_files:
         path = os.path.join(base_dir, f)
         if not os.path.exists(path):
@@ -79,6 +84,7 @@ def verify():
     if os.path.exists(readme_path):
         with open(readme_path, "r", encoding="utf-8") as fh:
             readme = fh.read()
+        broken = 0
         for match in re.finditer(r"\]\(([^)]+)\)", readme):
             target = match.group(1).strip()
             if target.startswith(("http://", "https://", "mailto:", "#")):
@@ -86,9 +92,8 @@ def verify():
             target_path = os.path.normpath(os.path.join(base_dir, target))
             if not os.path.exists(target_path):
                 errors.append(f"Broken README link: {target}")
-        if errors:
-            pass
-        else:
+                broken += 1
+        if broken == 0:
             print("[PASS] All local markdown links in README resolve")
 
     # 5. Contract Validity
@@ -102,6 +107,10 @@ def verify():
                 errors.append(f"Expected 12 factors in contract, found {len(factors)}")
             else:
                 print(f"[PASS] Architecture contract valid with all {len(factors)} factors.")
+            if "obsidian" not in data.get("operatingModel", {}):
+                errors.append("Contract missing obsidian ground-truth layer")
+            if "harness" not in data.get("operatingModel", {}):
+                errors.append("Contract missing session harness layer")
         except Exception as exc:
             errors.append(f"Invalid JSON in contract: {exc}")
 

@@ -1,6 +1,6 @@
 # 12-Factor AI Agent Architecture Specification
 
-Version: 1.0.0
+Version: 1.1.0
 
 ## Overview
 
@@ -25,11 +25,14 @@ Tool and skill selection is strictly capped (e.g., max 1 primary + 2 secondary s
 ### Factor 5: Non-Blocking Fast-Path Execution
 Operations that check diagnostic status, local files, or fallback runtimes use non-blocking fast-path shortcuts without halting background agent loops.
 
-### Factor 6: Clean Memory Boundaries
+### Factor 6: Clean Memory Boundaries (Obsidian Vault + Session Harness)
 Memory is explicitly triaged into three decoupled channels:
-1. Ingestion: Raw docs and external code indexes.
-2. Ground Truth: Human-edited Markdown vault.
-3. Session Harness: Cross-session task checkpoints and receipts.
+
+1. **Ingestion**: Raw docs, external code indexes, and LLM Wiki searchable index.
+2. **Ground Truth**: Human-edited Obsidian Markdown Vault for confirmed decisions, reviews, and long-term experience.
+3. **Session Harness**: Cross-session task checkpoints, state, and cryptographic receipts.
+
+Obsidian is the source of human truth; the Harness is the source of session truth; the ingestion layer is never allowed to silently overwrite either.
 
 ### Factor 7: Auditable Multi-Agent DAG
 Complex multi-agent tasks run as bounded Directed Acyclic Graphs (DAGs). Each sub-agent is assigned an isolated role with bounded timeouts and single-writer concurrency.
@@ -44,7 +47,7 @@ System failures and user corrections automatically convert into persistent preco
 Workspaces enforce strict file system sandboxing, automatic credential masking, and explicit user approval for destructive or external state mutations.
 
 ### Factor 11: Multi-Language & Ecosystem Internationalization
-Documentation, contracts, error messages, and API schemas support multi-language internationalization out of the box.
+Documentation, contracts, error messages, and API schemas support EN/ZH/JA/ES/DE out of the box.
 
 ### Factor 12: Independent Architecture Delivery
 System architecture verification and contract checks are decoupled from external deployment infrastructure, allowing architectural validation even when network or deployment channels are blocked.

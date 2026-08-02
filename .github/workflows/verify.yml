@@ -1,0 +1,19 @@
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run architecture verification gate
+        run: python scripts/verify_architecture.py
+      - name: Run demo agent workflow
+        run: python examples/demo_agent_workflow.py
