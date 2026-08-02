@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "open-agent-architecture"
+version = "1.0.0"
+description = "12-Factor AI Agent Architecture Framework & Dynamic Skill Routing"
+readme = "README.md"
+authors = [{ name = "Open Agent Architecture Maintainers" }]
+license = { text = "MIT" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.9"
+dependencies = [
+    "pydantic>=2.0.0",
+    "pyyaml>=6.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/open-agent-architecture/open-agent-architecture"
+"Documentation" = "https://github.com/open-agent-architecture/open-agent-architecture/tree/main/docs"

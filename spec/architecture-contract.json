@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "framework": "Open Agent Architecture (OAA)",
+  "version": "1.0.0",
+  "updatedAt": "2026-08-02",
+  "purpose": "Single verifiable architecture contract for 12-Factor AI Agent governance",
+  "operatingModel": {
+    "controlPlane": {
+      "orchestrator": "Codex Primary Control Plane",
+      "dagEngine": "OMO DAG Orchestrator",
+      "executorLayer": "LazyCodex Sandboxed Executor & QA Gate",
+      "memoryStore": "Multi-layer Fact Store & Session Harness"
+    },
+    "factors": [
+      "Factor 1: Single Control Plane",
+      "Factor 2: Context Budgeting",
+      "Factor 3: Structured Outputs & Gates",
+      "Factor 4: Controlled Tool Routing",
+      "Factor 5: Fast-Path Execution",
+      "Factor 6: Memory Separation",
+      "Factor 7: Auditable Multi-Agent DAG",
+      "Factor 8: Cryptographic Receipts",
+      "Factor 9: Self-Evolution Loop",
+      "Factor 10: Zero-Trust Security Boundary",
+      "Factor 11: Ecosystem Multi-Language Support",
+      "Factor 12: Independent Architecture Delivery"
+    ],
+    "taskStates": [
+      "pending",
+      "running",
+      "awaiting_approval",
+      "paused",
+      "degraded",
+      "blocked",
+      "failed",
+      "cancelled",
+      "passed"
+    ],
+    "multiLanguageSupport": [
+      "en-US",
+      "zh-CN",
+      "ja-JP",
+      "es-ES",
+      "de-DE"
+    ],
+    "securityPolicy": {
+      "sandboxMode": "workspace-write",
+      "sanitizer": "automatic-credential-masking",
+      "approvalPolicy": "explicit-user-escalation-for-write-outside-workspace"
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ArchitectureContract",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "integer"
+    },
+    "framework": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "operatingModel": {
+      "type": "object",
+      "properties": {
+        "controlPlane": {
+          "type": "object"
+        },
+        "factors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "taskStates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "multiLanguageSupport": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "securityPolicy": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "controlPlane",
+        "factors",
+        "taskStates",
+        "multiLanguageSupport",
+        "securityPolicy"
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "framework",
+    "version",
+    "operatingModel"
+  ]
+}
