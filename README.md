@@ -2,24 +2,24 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![Architecture: 12--Factor](https://img.shields.io/badge/Architecture-12--Factor-green.svg)](docs/12-factor-agent-spec.md)
+[![Architecture: 12-Factor](https://img.shields.io/badge/Architecture-12-Factor-green.svg)](spec/12-factor-agent-spec.md)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](scripts/verify_architecture.py)
 
 **Open Agent Architecture (OAA)** is a production-ready, open-source architectural framework for building, orchestrating, and governing autonomous AI Agent systems. It implements the **12-Factor Agent Architecture**, dynamic skill routing, auditable multi-agent DAG execution, and cross-session state harness.
 
 ---
 
-## ?? Multi-Language Documentation
+## 🌐 Multi-Language Documentation
 
-- ???? [English](README.md)
-- ???? [????](docs/i18n/README.zh-CN.md)
-- ???? [???](docs/i18n/README.ja.md)
-- ???? [Espa?ol](docs/i18n/README.es.md)
-- ???? [Deutsch](docs/i18n/README.de.md)
+- 🇺🇸 [English](README.md)
+- 🇨🇳 [简体中文](docs/i18n/README.zh-CN.md)
+- 🇯🇵 [日本語](docs/i18n/README.ja.md)
+- 🇪🇸 [Español](docs/i18n/README.es.md)
+- 🇩🇪 [Deutsch](docs/i18n/README.de.md)
 
 ---
 
-## ?? Key Features
+## 🚀 Key Features
 
 1. **12-Factor Agent Principles**: Clear separation of Control Plane, Context Budgeting, Verification Gates, and Deterministic State Reducers.
 2. **Dynamic Skill Routing Engine**: Intent compression algorithm, metadata recall, precondition memory, and sub-agent capability matching.
@@ -29,7 +29,7 @@
 
 ---
 
-## ?? System Architecture Diagram
+## 🏗 System Architecture Diagram
 
 ```
 +-------------------------------------------------------------------+
@@ -72,7 +72,7 @@
 
 ---
 
-## ?? The 12 Factors of Autonomous AI Agents
+## 📋 The 12 Factors of Autonomous AI Agents
 
 | # | Factor | Description |
 |---|---|---|
@@ -91,12 +91,12 @@
 
 ---
 
-## ?? Quick Start
+## 💻 Quick Start
 
 ### Installation
 
 ```bash
-git clone https://github.com/open-agent-architecture/open-agent-architecture.git
+git clone https://github.com/cjw19950315-lgtm/open-agent-architecture.git
 cd open-agent-architecture
 pip install -e .
 ```
@@ -115,36 +115,36 @@ python examples/demo_agent_workflow.py
 
 ---
 
-## ?? Repository Structure
+## 📊 Repository Structure
 
 ```
 open-agent-architecture/
-??? README.md                           # Main English documentation
-??? pyproject.toml                      # Package build configuration
-??? LICENSE                             # MIT License
-??? CODEX_FOR_OSS_APPLICATION.md        # OpenAI Codex for OSS application package
-??? docs/
-?   ??? 12-factor-agent-spec.md         # Detailed 12-Factor specification
-?   ??? skill-routing-spec.md           # Dynamic skill routing specification
-?   ??? i18n/
-?       ??? README.zh-CN.md             # ???? README
-?       ??? README.ja.md                # ??? README
-?       ??? README.es.md                # Espa?ol README
-?       ??? README.de.md                # Deutsch README
-??? spec/
-?   ??? architecture-contract.json      # Machine-readable architecture contract
-??? schemas/
-?   ??? architecture-contract.schema.json
-?   ??? skill-registry.schema.json
-??? scripts/
-?   ??? verify_architecture.py          # Automated architecture gate script
-??? examples/
-    ??? demo_agent_workflow.py          # Runnable 12-Factor agent demo
+├── README.md                           # Main English documentation
+├── pyproject.toml                      # Package build configuration
+├── LICENSE                             # MIT License
+├── CODEX_FOR_OSS_APPLICATION.md        # OpenAI Codex for OSS application package
+├── docs/
+│   └── i18n/
+│       ├── README.zh-CN.md             # 简体中文 README
+│       ├── README.ja.md                # 日本語 README
+│       ├── README.es.md                # Español README
+│       └── README.de.md                # Deutsch README
+├── spec/
+│   ├── 12-factor-agent-spec.md         # Detailed 12-Factor specification
+│   ├── skill-routing-spec.md           # Dynamic skill routing specification
+│   └── architecture-contract.json      # Machine-readable architecture contract
+├── schemas/
+│   ├── architecture-contract.schema.json
+│   └── skill-registry.schema.json
+├── scripts/
+│   └── verify_architecture.py          # Automated architecture gate script
+└── examples/
+    └── demo_agent_workflow.py          # Runnable 12-Factor agent demo
 ```
 
 ---
 
-## ?? OpenAI Codex for OSS Program
+## 🏅 OpenAI Codex for OSS Program
 
 This repository is maintained as an open-source reference implementation for autonomous agent governance. We actively apply for the **OpenAI Codex for Open Source (Codex for OSS)** program to empower open-source AI maintainers with 6 months of ChatGPT Pro, Codex Security, and API credit infrastructure.
 
@@ -152,6 +152,6 @@ For maintainers interested in our grant application template and guidelines, see
 
 ---
 
-## ?? License
+## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).
