@@ -2,6 +2,21 @@
 
 All notable changes to this project are documented here. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.0] - 2026-08-02
+
+### Added
+
+- Governance-first positioning: README, governance model doc, and contract updated.
+- CODE_OF_CONDUCT.md, ROADMAP.md, docs/governance-model.md.
+- GitHub issue templates (bug report / feature request) and pull request template.
+- Release workflow (`release.yml`) triggered by `v*` tags.
+- Extended tests: verification rejection, state-machine guards, manual-approval failure path, CLI smoke, ground-truth versioning.
+
+### Changed
+
+- README claims corrected to match implementation (DAG nodes run in worker threads; command policy is scaffolding; OpenAI adapter optional/untested in CI).
+- Architecture contract no longer references external LazyCodex executor; points to in-repo implementation.
+- Version metadata and package metadata aligned to 1.3.0.
 ## [1.2.0] - 2026-08-02
 
 ### Added

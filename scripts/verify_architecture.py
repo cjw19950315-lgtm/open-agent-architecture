@@ -26,8 +26,14 @@ def verify():
         "pyproject.toml",
         "CONTRIBUTING.md",
         "SECURITY.md",
+        "CODE_OF_CONDUCT.md",
         "CHANGELOG.md",
+        "ROADMAP.md",
         ".github/workflows/verify.yml",
+        ".github/workflows/release.yml",
+        ".github/ISSUE_TEMPLATE/bug_report.md",
+        ".github/pull_request_template.md",
+        "docs/governance-model.md",
         "docs/obsidian-harness-integration.md",
         "spec/12-factor-agent-spec.md",
         "spec/skill-routing-spec.md",
@@ -42,6 +48,7 @@ def verify():
         "oaa/harness.py",
         "oaa/cli.py",
         "tests/test_runtime.py",
+        "tests/test_governance.py",
         "examples/real_task.py",
     ]
 

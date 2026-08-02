@@ -1,30 +1,38 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "framework": "Open Agent Architecture (OAA)",
-  "version": "1.1.0",
+  "version": "1.3.0",
   "updatedAt": "2026-08-02",
-  "purpose": "Single verifiable architecture contract for 12-Factor AI Agent governance, including Obsidian ground-truth vault and cross-session Harness",
+  "purpose": "Governance-first Agent Runtime and Reference Architecture: single verifiable contract for 12-Factor AI Agent governance, including Obsidian ground-truth vault and cross-session Harness",
+  "positioning": {
+    "runtime": true,
+    "referenceArchitecture": true,
+    "governanceFirst": true,
+    "productionFramework": false
+  },
   "operatingModel": {
     "controlPlane": {
-      "orchestrator": "Codex Primary Control Plane",
-      "dagEngine": "OMO DAG Orchestrator",
-      "executorLayer": "LazyCodex Sandboxed Executor & QA Gate",
+      "orchestrator": "OAA ControlPlane (oaa/control.py)",
+      "dagEngine": "OAA DAGExecutor (oaa/dag.py)",
+      "executorLayer": "Sandboxed Executor & QA Gate (oaa/verification.py + oaa/security.py)",
       "memoryStore": {
-        "ingestion": "LLM Wiki / raw source index",
-        "groundTruth": "Obsidian Markdown Vault (human-confirmed decisions, reviews, experience)",
-        "session": "Harness (cross-session task state, checkpoints, receipts)"
+        "ingestion": "IngestionStore (unconfirmed)",
+        "groundTruth": "Obsidian Markdown Vault via GroundTruthStore (human-only writes)",
+        "session": "SessionHarness (cross-session task state, checkpoints, receipts)"
       }
     },
     "harness": {
       "purpose": "Cross-session task state, checkpoints and cryptographic receipts",
       "checkpointMinutes": 15,
       "stateFormat": "JSON receipts + git-backed history",
-      "survivesCompaction": true
+      "survivesCompaction": true,
+      "resumeAfterRestart": true
     },
     "obsidian": {
       "purpose": "Human ground truth for decisions, reviews and long-term experience",
       "format": "Markdown vault",
-      "authority": "Human-confirmed content is authoritative over AI-generated content"
+      "authority": "Human-confirmed content is authoritative over AI-generated content",
+      "agentWritesDenied": true
     },
     "factors": [
       "Factor 1: Single Control Plane",
@@ -33,21 +41,26 @@
       "Factor 4: Controlled Tool Routing",
       "Factor 5: Fast-Path Execution",
       "Factor 6: Memory Separation (Obsidian Vault + Session Harness)",
-      "Factor 7: Auditable Multi-Agent DAG",
+      "Factor 7: Auditable DAG",
       "Factor 8: Cryptographic Receipts",
       "Factor 9: Self-Evolution Loop",
       "Factor 10: Zero-Trust Security Boundary",
       "Factor 11: Ecosystem Multi-Language Support",
-      "Factor 12: Independent Architecture Delivery"
+      "Factor 12: Independent Delivery & Gates"
     ],
     "taskStates": [
       "pending", "running", "awaiting_approval", "paused", "degraded", "blocked", "failed", "cancelled", "passed"
+    ],
+    "runtimeStates": [
+      "CREATED", "PLANNING", "READY", "RUNNING", "WAITING_APPROVAL", "VERIFYING", "PASSED", "FAILED", "CANCELLED"
     ],
     "multiLanguageSupport": ["en-US", "zh-CN", "ja-JP", "es-ES", "de-DE"],
     "securityPolicy": {
       "sandboxMode": "workspace-write",
       "sanitizer": "automatic-credential-masking",
-      "approvalPolicy": "explicit-user-escalation-for-write-outside-workspace"
+      "approvalPolicy": "explicit-user-escalation-for-write-outside-workspace",
+      "pathIsolation": true,
+      "commandPolicy": "scaffolded-not-wired"
     }
   }
 }

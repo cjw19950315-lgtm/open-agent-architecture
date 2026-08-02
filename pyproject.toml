@@ -4,15 +4,17 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "open-agent-architecture"
-version = "1.2.0"
-description = "Runnable 12-Factor AI Agent Architecture runtime with skill routing, DAG execution, session harness, and verification gates"
+version = "1.3.0"
+description = "Governance-first Agent Runtime and Reference Architecture: control plane, skill routing, DAG execution, agent loop, session harness, verification gates, and chained receipts"
 readme = "README.md"
 authors = [{ name = "Open Agent Architecture Maintainers" }]
 license = { text = "MIT" }
+keywords = ["agent-runtime", "ai-agents", "governance", "llm", "dag", "verification", "receipts"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+    "Development Status :: 3 - Alpha",
     "Topic :: Software Development :: Libraries :: Application Frameworks",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
@@ -21,10 +23,13 @@ dependencies = []
 
 [project.optional-dependencies]
 openai = ["openai>=1.0"]
+dev = []
 
 [project.urls]
 "Homepage" = "https://github.com/cjw19950315-lgtm/open-agent-architecture"
 "Documentation" = "https://github.com/cjw19950315-lgtm/open-agent-architecture/tree/main/docs"
+"Roadmap" = "https://github.com/cjw19950315-lgtm/open-agent-architecture/blob/main/ROADMAP.md"
+"Changelog" = "https://github.com/cjw19950315-lgtm/open-agent-architecture/blob/main/CHANGELOG.md"
 
 [project.scripts]
 oaa = "oaa.cli:main"
