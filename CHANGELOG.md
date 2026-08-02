@@ -6,11 +6,10 @@ All notable changes to this project are documented here. Format follows [Keep a 
 
 ### Added
 
-- Codex for OSS application kit rewritten in official form field order.
 - Obsidian ground-truth vault and session Harness layers added to spec, contract, and docs.
 - CONTRIBUTING.md, SECURITY.md, and CHANGELOG.md.
 - GitHub Actions CI (`verify.yml`) running architecture gate + demo workflow.
-- README polish: features, architecture diagram, memory-layer table, and program links.
+- README polish: features, architecture diagram, memory-layer table.
 
 ### Fixed
 

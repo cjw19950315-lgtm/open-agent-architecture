@@ -24,7 +24,6 @@ def verify():
         "README.md",
         "LICENSE",
         "pyproject.toml",
-        "CODEX_FOR_OSS_APPLICATION.md",
         "CONTRIBUTING.md",
         "SECURITY.md",
         "CHANGELOG.md",

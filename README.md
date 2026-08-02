@@ -6,7 +6,6 @@
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Architecture: 12-Factor](https://img.shields.io/badge/Architecture-12-Factor-green.svg)](spec/12-factor-agent-spec.md)
 [![CI: verify](https://img.shields.io/badge/CI-verify-brightgreen.svg)](.github/workflows/verify.yml)
-[![Codex for OSS](https://img.shields.io/badge/Codex%20for%20OSS-Apply-000000.svg)](https://openai.com/zh-Hans-CN/form/codex-for-oss/)
 
 **Open Agent Architecture (OAA)** is an open-source reference framework for governing autonomous AI agents. It implements the **12-Factor Agent Architecture**, dynamic skill routing, auditable multi-agent DAG execution, and a **session Harness** with an **Obsidian Markdown Vault** as the human ground-truth layer.
 
@@ -135,7 +134,6 @@ python examples/demo_agent_workflow.py
 ```
 open-agent-architecture/
 ├── README.md                           # Main English documentation
-├── CODEX_FOR_OSS_APPLICATION.md        # Codex for OSS application kit
 ├── CONTRIBUTING.md                     # Contribution guide
 ├── SECURITY.md                         # Security policy
 ├── CHANGELOG.md                        # Release history
@@ -157,16 +155,6 @@ open-agent-architecture/
 └── examples/
     └── demo_agent_workflow.py          # Runnable 12-Factor demo
 ```
-
----
-
-## 🏅 OpenAI Codex for OSS Program
-
-This repository is maintained as an open-source reference implementation for autonomous agent governance. We apply to the **OpenAI Codex for Open Source** program to support 6 months of ChatGPT Pro with Codex, Codex Security, and API-credit infrastructure for maintainer automation.
-
-- Official form (中文): <https://openai.com/zh-Hans-CN/form/codex-for-oss/>
-- Official form (English): <https://openai.com/form/codex-for-oss/>
-- Field-by-field application kit: [CODEX_FOR_OSS_APPLICATION.md](CODEX_FOR_OSS_APPLICATION.md)
 
 ---
 

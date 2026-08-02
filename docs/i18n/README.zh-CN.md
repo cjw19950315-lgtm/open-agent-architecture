@@ -5,7 +5,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](../../LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Architecture: 12-Factor](https://img.shields.io/badge/Architecture-12-Factor-green.svg)](../../spec/12-factor-agent-spec.md)
-[![Codex for OSS](https://img.shields.io/badge/Codex%20for%20OSS-Apply-000000.svg)](https://openai.com/zh-Hans-CN/form/codex-for-oss/)
 
 **开放 Agent 架构（OAA）** 是一个开源参考框架，用于治理自主 AI Agent。项目实现了 **12-Factor Agent 架构原则**、动态技能路由、可审计的多 Agent DAG 执行，以及以 **Obsidian Markdown Vault** 为人工事实层、以 **会话 Harness** 为跨会话状态层的记忆体系。
 
@@ -81,14 +80,6 @@ python scripts/verify_architecture.py
 # 运行示例 Agent 工作流
 python examples/demo_agent_workflow.py
 ```
-
----
-
-## 🏅 OpenAI Codex for OSS 6 个月会员申请
-
-本仓库作为开源 Agent 架构范式维护。申请材料与填表指南详见 [CODEX_FOR_OSS_APPLICATION.md](../../CODEX_FOR_OSS_APPLICATION.md)。
-
-- 官方中文表单：<https://openai.com/zh-Hans-CN/form/codex-for-oss/>
 
 ---
 
