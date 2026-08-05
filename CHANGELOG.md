@@ -2,6 +2,18 @@
 
 All notable changes to this project are documented here. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.0] - 2026-08-05
+
+### Added
+
+- Multi-model role binding in the architecture contract: orchestrator (main model), independent implementation lane (DeepSeek V4 Flash), and parallel read-only preflight plus independent final verification (Gemini 3.6 Flash).
+- Governance model section describing the binding constraints: no intermediate subagent models, quota fallback, and routing-only impact.
+- README section documenting the role binding as a deployment pattern of the reference architecture.
+
+### Changed
+
+- Architecture contract bumped to schema v4; version metadata aligned to 1.4.0.
+
 ## [1.3.0] - 2026-08-02
 
 ### Added

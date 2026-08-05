@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.4.0-blue.svg)](CHANGELOG.md)
 [![CI: verify](https://img.shields.io/badge/CI-verify-brightgreen.svg)](.github/workflows/verify.yml)
 
 **Open Agent Architecture (OAA)** is a runnable Agent Runtime whose design puts governance first: every task goes through a control plane, a dynamic skill router, a parallel DAG executor, an agent loop, a verification gate, durable session checkpoints, and a chained SHA-256 execution receipt. It also ships as a reference architecture for teams that want the same guardrails in their own agents.
@@ -105,6 +105,18 @@ This is the code path implemented in the `oaa` package; the unit tests and CI ex
 11. **Zero-Trust Security** — path isolation, secret masking, write approvals.
 12. **Observability** — structured logs, spans, execution timeline, metrics.
 13. **Runtime API** — `run / resume / cancel / approve / retry / get_state / get_receipt` + CLI.
+
+## Multi-Model Role Binding
+
+The confirmed operating pattern (2026-08-05) separates concerns across models instead of running one model for every role:
+
+| Role | Model | Responsibility |
+|---|---|---|
+| Orchestrator | Main model | Decompose, decide, arbitrate and summarize; the main window keeps orchestration state only. |
+| Implementation lane | DeepSeek V4 Flash | Independent implementation lane; single writer per lane, no concurrent writers for the same artifact. |
+| Verification lane | Gemini 3.6 Flash | Parallel read-only preflight and independent final verification, fully separate from implementation. |
+
+Constraints: no intermediate subagent models between the orchestrator and the lanes; a quota-limited lane falls back to any available capable model instead of blocking or silently degrading; the binding changes task routing only and never rewrites history sessions or state. Model providers in the `oaa` runtime remain pluggable, so this binding is a deployment pattern of the reference architecture.
 
 ---
 

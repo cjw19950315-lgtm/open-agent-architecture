@@ -28,7 +28,7 @@
 4. **零信任安全边界**：工作区沙箱、凭据脱敏与写操作强制审批。
 5. **Obsidian 人工事实库**：人工确认的决策、复盘与长期经验存放在 Markdown Vault 中。
 6. **会话 Harness**：跨会话任务状态、检查点与密码学收据，压缩与重启后仍可恢复。
-7. **多模型与供应商无关**：支持 OpenAI GPT / Codex、Claude、DeepSeek 与本地 LLM。
+7. **多模型与供应商无关**：支持 OpenAI GPT / Codex、Claude、DeepSeek 与本地 LLM；已确认多模型角色绑定（2026-08-05）：主模型编排决策、DeepSeek V4 Flash 独立实现泳道、Gemini 3.6 Flash 并行只读预检与独立终验。
 
 ---
 

@@ -1,9 +1,9 @@
 {
-  "schemaVersion": 3,
+  "schemaVersion": 4,
   "framework": "Open Agent Architecture (OAA)",
-  "version": "1.3.0",
-  "updatedAt": "2026-08-02",
-  "purpose": "Governance-first Agent Runtime and Reference Architecture: single verifiable contract for 12-Factor AI Agent governance, including Obsidian ground-truth vault and cross-session Harness",
+  "version": "1.4.0",
+  "updatedAt": "2026-08-05",
+  "purpose": "Governance-first Agent Runtime and Reference Architecture: single verifiable contract for 12-Factor AI Agent governance, including Obsidian ground-truth vault, cross-session Harness, and confirmed multi-model role binding",
   "positioning": {
     "runtime": true,
     "referenceArchitecture": true,
@@ -61,6 +61,19 @@
       "approvalPolicy": "explicit-user-escalation-for-write-outside-workspace",
       "pathIsolation": true,
       "commandPolicy": "scaffolded-not-wired"
+    },
+    "multiModelRoleBinding": {
+      "confirmedAt": "2026-08-05",
+      "roles": {
+        "orchestrator": "Main model owns decomposition, decision, arbitration and final summary; the main window keeps orchestration state only.",
+        "implementationLane": "Independent implementation lane (DeepSeek V4 Flash) as single writer per lane; no concurrent writers for the same artifact.",
+        "verificationLane": "Parallel read-only preflight and independent final verification (Gemini 3.6 Flash), fully separate from implementation."
+      },
+      "constraints": [
+        "No intermediate subagent models between orchestrator and lanes.",
+        "Quota-limited lanes fall back to any available capable model instead of blocking or silently degrading.",
+        "Role binding changes task routing only; it never rewrites history sessions or state."
+      ]
     }
   }
 }

@@ -52,3 +52,17 @@ Every task produces a chained SHA-256 receipt (`oaa/receipt.py`) containing:
 - Pause/resume approval (write denial fails the task instead of waiting) - roadmap.
 - Process-level isolation for sub-agents - roadmap.
 - OpenTelemetry export - roadmap.
+
+## Multi-Model Role Binding
+
+Confirmed 2026-08-05 as a deployment pattern of the reference architecture:
+
+- The orchestrator is a single main model: it decomposes work, decides, arbitrates, and produces the final summary. The main window keeps orchestration state only.
+- An independent implementation lane (DeepSeek V4 Flash) acts as the single writer per lane; no concurrent writers exist for the same artifact.
+- A verification lane (Gemini 3.6 Flash) runs a parallel read-only preflight and an independent final verification, fully separate from implementation.
+
+Binding constraints:
+
+- No intermediate subagent models between the orchestrator and the lanes.
+- Quota-limited lanes fall back to any available capable model instead of blocking or silently degrading.
+- The binding changes task routing only; it never rewrites history sessions or state.
